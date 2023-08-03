@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Formulaire de saisie de matériel</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <h2>Formulaire de saisie de matériel</h2>
+                <form id="materialForm">
+                    <label for="material">Nom du matériel :</label>
+                    <select id="material" name="material" class="form-select">
+                        <option value="imprimante">Imprimante</option>
+                        <option value="ordinateur">Ordinateur</option>
+                        <option value="souris">Souris</option>
+                        <option value="serveur">Serveur</option>
+                        <option value="switch">Switch</option>
+                        <option value="desktop">Desktop</option>
+                        <option value="clavier">Clavier</option>
+                        <option value="hub">Hub</option>
+                    </select>
+                    <br>
+                    <label for="serialNumber">Numéro de série :</label>
+                    <input type="text" id="serialNumber" name="serialNumber" required class="form-control">
+                    <br>
+                    <label for="date">Date :</label>
+                    <input type="date" id="date" name="date" required class="form-control">
+                    <br>
+                    <label for="username">Nom d'utilisateur :</label>
+                    <input type="text" id="username" name="username" required class="form-control">
+                    <br>
+                    <label for="service">Service :</label>
+                    <input type="text" id="service" name="service" required class="form-control">
+                    <br>
+                    <label for="status">État du matériel :</label>
+                    <select id="status" name="status" class="form-select">
+                        <option value="en service">en service</option>
+                        <option value="hors service">hors service</option>
+                        <option value="en panne">en panne</option>
+                        <option value="rebuter">rebuter</option>
+                    </select>
+                    <br>
+                    <label for="location">Localisation :</label>
+                    <input type="text" id="location" name="location" required class="form-control">
+                    <br>
+                    <button type="button" onclick="generateQRCode()" class="btn btn-primary">Générer le QR Code</button>
+                    <div id="qrcode"></div>
+                    <br>
+                    <script>
+                        function generateQRCode() {
+                            const formElements = document.getElementById('materialForm').elements;
+                            let formData = {};
+                            
+                            for (let i = 0; i < formElements.length; i++) {
+                                const element = formElements[i];
+                                formData[element.name] = element.value;
+                            }
+                            
+                            const qrcodeElement = document.getElementById('qrcode');
+                            qrcodeElement.innerHTML = '';
+                            
+                            const qrcode = new QRCode(qrcodeElement, {
+                                text: Object.values(formData).join(", "),
+                                width: 256,
+                                height: 256
+                            });
+                        }
+                    </script>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
